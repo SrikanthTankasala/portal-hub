@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SIVAKARANGULA CONSULTANT@INCOME TAX</title>
+  <title>SIVA KARANGULA - CONSULTANT@INCOME TAX</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
@@ -58,12 +58,22 @@
       border: 2px solid #2563eb;
     }
 
-    .login-logo h2 {
+    .login-logo .brand-main {
       color: #0f172a;
       font-size: 18px;
       font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      line-height: 1.2;
+    }
+
+    .login-logo .brand-sub {
+      color: #2563eb;
+      font-size: 12px;
+      font-weight: 700;
       text-transform: lowercase;
       letter-spacing: 0.5px;
+      margin-top: 2px;
     }
 
     /* ERROR MESSAGE STYLING */
@@ -176,13 +186,22 @@
       text-align: left;
     }
 
-    .logo-title {
+    .logo-title-main {
       color: #ffffff;
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 800;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.8px;
       line-height: 1.1;
+      text-transform: uppercase;
+    }
+
+    .logo-title-sub {
+      color: #38bdf8;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
       text-transform: lowercase;
+      margin-top: 2px;
     }
 
     .nav-wrapper {
@@ -256,11 +275,11 @@
     }
 
     .home-title {
-      font-size: 32px;
-      font-weight: 900;
+      font-size: 28px;
+      font-weight: 800;
       color: #ffffff;
       margin-bottom: 35px;
-      letter-spacing: 1.5px;
+      letter-spacing: 1px;
       text-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
 
@@ -355,6 +374,8 @@
 
     .footer-col ul li {
       margin-bottom: 12px;
+      color: #94a3b8;
+      font-size: 14px;
     }
 
     .footer-col ul li a {
@@ -421,15 +442,14 @@
 </head>
 <body>
 
-  <!-- LOGIN PAGE -->
   <div id="login-page">
     <div class="login-card">
       <div class="login-logo">
         <img src="mypic.jpg" alt="Logo" class="login-logo-img">
-        <h2>sivakarangula consultant@income tax</h2>
+        <div class="brand-main">SIVA KARANGULA</div>
+        <div class="brand-sub">consultant@income tax</div>
       </div>
 
-      <!-- ERROR BOX -->
       <div id="error-message" class="error-msg">
         Invalid Username or Password. Please try again.
       </div>
@@ -448,13 +468,13 @@
     </div>
   </div>
 
-  <!-- MAIN PORTAL HUB -->
   <div id="portal-main">
     <header>
       <div class="logo-container" onclick="switchView('home')">
         <img src="mypic.jpg" alt="Logo" class="logo-img">
         <div class="logo-text-group">
-          <span class="logo-title">sivakarangula consultant@income tax</span>
+          <span class="logo-title-main">SIVA KARANGULA</span>
+          <span class="logo-title-sub">consultant@income tax</span>
         </div>
       </div>
 
@@ -470,10 +490,9 @@
     </header>
 
     <div class="viewport">
-      <!-- HOME VIEW -->
       <div id="view-home" class="view-content active">
         <div class="home-view">
-          <h1 class="home-title">MY PORTAL HUB</h1>
+          <h1 class="home-title">Expert Tax Compliance & Financial Advisory for Businesses</h1>
           
           <div class="cards-container">
             <div class="portal-card" onclick="switchView('logistics')">
@@ -511,9 +530,12 @@
               </ul>
             </div>
 
-            <!-- UPDATED CONTACT INFO -->
             <div class="footer-col">
               <h4>Contact Info</h4>
+              <div class="contact-item">
+                <i class="fa-solid fa-location-dot"></i>
+                <span>Address: Road No.1, Municipal Employees Colony, Vijayawada - 520010.</span>
+              </div>
               <div class="contact-item">
                 <i class="fa-solid fa-phone"></i>
                 <span>9440666662</span>
@@ -524,12 +546,13 @@
               </div>
             </div>
 
-            <!-- UPDATED OUR SERVICES -->
             <div class="footer-col">
               <h4>Our Services</h4>
               <ul>
-                <li><a href="#">IncomeTax Returns</a></li>
-                <li><a href="#">Audits</a></li>
+                <li>Income Tax & GST Filings</li>
+                <li>Corporate Compliance & Audits</li>
+                <li>Bookkeeping & Accounting</li>
+                <li>Financial Advisory & Tax Planning</li>
               </ul>
             </div>
 
@@ -544,12 +567,11 @@
           </div>
 
           <div class="footer-bottom">
-            &copy; 2026 sivakarangula consultant@income tax. All Rights Reserved.
+            &copy; 2026 SIVA KARANGULA - consultant@income tax. All Rights Reserved.
           </div>
         </footer>
       </div>
 
-      <!-- IFRAMES -->
       <div id="view-logistics" class="view-content">
         <iframe src="https://sivakarangula.github.io/MLPL1/"></iframe>
       </div>
