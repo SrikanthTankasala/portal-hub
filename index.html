@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SIVA KARANGULA - PORTAL HUB</title>
+  <title>SIVAKARANGULA CONSULTANT@INCOME TAX</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
@@ -19,7 +19,7 @@
       background-color: #0f172a;
     }
 
-    /* LOGIN PAGE WITH TAX BACKGROUND */
+    /* LOGIN PAGE */
     #login-page {
       display: flex;
       justify-content: center;
@@ -49,27 +49,21 @@
       margin-bottom: 20px;
     }
 
-    .login-logo svg {
-      width: 64px;
-      height: 64px;
+    .login-logo-img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
       margin-bottom: 12px;
+      border: 2px solid #2563eb;
     }
 
     .login-logo h2 {
       color: #0f172a;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 800;
-      text-transform: uppercase;
+      text-transform: lowercase;
       letter-spacing: 0.5px;
-    }
-
-    .login-logo p {
-      color: #2563eb;
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-top: 4px;
     }
 
     /* ERROR MESSAGE STYLING */
@@ -166,9 +160,12 @@
       user-select: none;
     }
 
-    .logo-svg {
+    .logo-img {
       width: 44px;
       height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid #38bdf8;
       flex-shrink: 0;
     }
 
@@ -181,20 +178,11 @@
 
     .logo-title {
       color: #ffffff;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 800;
       letter-spacing: 0.5px;
       line-height: 1.1;
-      text-transform: uppercase;
-    }
-
-    .logo-subtitle {
-      color: #38bdf8;
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      margin-top: 2px;
+      text-transform: lowercase;
     }
 
     .nav-wrapper {
@@ -433,19 +421,15 @@
 </head>
 <body>
 
+  <!-- LOGIN PAGE -->
   <div id="login-page">
     <div class="login-card">
       <div class="login-logo">
-        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="48" fill="#1e293b" stroke="#3b82f6" stroke-width="3"/>
-          <path d="M50 20 L78 32 V52 C78 70 50 82 50 82 C50 82 22 70 22 52 V32 L50 20 Z" fill="#2563eb"/>
-          <path d="M40 38 H60 M40 48 H60 M40 58 H52" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
-          <path d="M54 54 L62 62 L70 50" stroke="#10b981" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <h2>Siva Karangula</h2>
-        <p>Income Tax Consultant</p>
+        <img src="mypic.jpg" alt="Logo" class="login-logo-img">
+        <h2>sivakarangula consultant@income tax</h2>
       </div>
 
+      <!-- ERROR BOX -->
       <div id="error-message" class="error-msg">
         Invalid Username or Password. Please try again.
       </div>
@@ -464,18 +448,13 @@
     </div>
   </div>
 
+  <!-- MAIN PORTAL HUB -->
   <div id="portal-main">
     <header>
       <div class="logo-container" onclick="switchView('home')">
-        <svg class="logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="48" fill="#1e293b" stroke="#3b82f6" stroke-width="3"/>
-          <path d="M50 20 L78 32 V52 C78 70 50 82 50 82 C50 82 22 70 22 52 V32 L50 20 Z" fill="#2563eb"/>
-          <path d="M40 38 H60 M40 48 H60 M40 58 H52" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
-          <path d="M54 54 L62 62 L70 50" stroke="#10b981" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <img src="mypic.jpg" alt="Logo" class="logo-img">
         <div class="logo-text-group">
-          <span class="logo-title">Siva Karangula</span>
-          <span class="logo-subtitle">Income Tax Consultant</span>
+          <span class="logo-title">sivakarangula consultant@income tax</span>
         </div>
       </div>
 
@@ -491,6 +470,7 @@
     </header>
 
     <div class="viewport">
+      <!-- HOME VIEW -->
       <div id="view-home" class="view-content active">
         <div class="home-view">
           <h1 class="home-title">MY PORTAL HUB</h1>
@@ -531,28 +511,25 @@
               </ul>
             </div>
 
+            <!-- UPDATED CONTACT INFO -->
             <div class="footer-col">
               <h4>Contact Info</h4>
               <div class="contact-item">
-                <i class="fa-solid fa-location-dot"></i>
-                <span>Donka Road, Vijayawada<br>0866-2950108</span>
-              </div>
-              <div class="contact-item">
-                <i class="fa-solid fa-globe"></i>
-                <span>mathrusrigastro.com</span>
+                <i class="fa-solid fa-phone"></i>
+                <span>9440666662</span>
               </div>
               <div class="contact-item">
                 <i class="fa-solid fa-envelope"></i>
-                <span>multimulti-service.com</span>
+                <span>sivakarangula@gmail.com</span>
               </div>
             </div>
 
+            <!-- UPDATED OUR SERVICES -->
             <div class="footer-col">
               <h4>Our Services</h4>
               <ul>
-                <li><a onclick="switchView('logistics')">Logistics Services</a></li>
-                <li><a onclick="switchView('gastro')">Healthcare Portals</a></li>
-                <li><a onclick="switchView('cinemas')">Cinema Bookings</a></li>
+                <li><a href="#">IncomeTax Returns</a></li>
+                <li><a href="#">Audits</a></li>
               </ul>
             </div>
 
@@ -567,11 +544,12 @@
           </div>
 
           <div class="footer-bottom">
-            &copy; 2026 Siva Karangula Income Tax Consultant. All Rights Reserved.
+            &copy; 2026 sivakarangula consultant@income tax. All Rights Reserved.
           </div>
         </footer>
       </div>
 
+      <!-- IFRAMES -->
       <div id="view-logistics" class="view-content">
         <iframe src="https://sivakarangula.github.io/MLPL1/"></iframe>
       </div>
