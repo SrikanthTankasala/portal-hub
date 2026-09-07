@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SIVA KARANGULA - CONSULTANT@INCOME TAX</title>
+  <title>SIVA KARANGULA - Consultant@Income Tax</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
@@ -69,14 +69,12 @@
 
     .login-logo .brand-sub {
       color: #2563eb;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 700;
-      text-transform: lowercase;
       letter-spacing: 0.5px;
       margin-top: 2px;
     }
 
-    /* ERROR MESSAGE STYLING */
     .error-msg {
       display: none;
       background-color: #fef2f2;
@@ -197,10 +195,9 @@
 
     .logo-title-sub {
       color: #38bdf8;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 700;
       letter-spacing: 0.5px;
-      text-transform: lowercase;
       margin-top: 2px;
     }
 
@@ -310,19 +307,27 @@
       border-color: rgba(56, 189, 248, 0.6);
     }
 
+    /* UPDATED IMAGE WRAPPER & IMAGE STYLES FOR PERFECT FIT */
     .card-img-wrapper {
       position: relative;
       width: 100%;
-      height: 420px;
-      background-color: #0f172a;
+      height: 320px;
+      background-color: #020617;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
       overflow: hidden;
     }
 
     .portal-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
       display: block;
+      border-radius: 8px;
     }
 
     .card-footer {
@@ -442,12 +447,13 @@
 </head>
 <body>
 
+  <!-- LOGIN PAGE -->
   <div id="login-page">
     <div class="login-card">
       <div class="login-logo">
         <img src="mypic.jpg" alt="Logo" class="login-logo-img">
         <div class="brand-main">SIVA KARANGULA</div>
-        <div class="brand-sub">consultant@income tax</div>
+        <div class="brand-sub">Consultant@Income Tax</div>
       </div>
 
       <div id="error-message" class="error-msg">
@@ -468,13 +474,14 @@
     </div>
   </div>
 
+  <!-- MAIN PORTAL HUB -->
   <div id="portal-main">
     <header>
       <div class="logo-container" onclick="switchView('home')">
         <img src="mypic.jpg" alt="Logo" class="logo-img">
         <div class="logo-text-group">
           <span class="logo-title-main">SIVA KARANGULA</span>
-          <span class="logo-title-sub">consultant@income tax</span>
+          <span class="logo-title-sub">Consultant@Income Tax</span>
         </div>
       </div>
 
@@ -490,21 +497,22 @@
     </header>
 
     <div class="viewport">
+      <!-- HOME VIEW -->
       <div id="view-home" class="view-content active">
         <div class="home-view">
-          <h1 class="home-title">Expert Tax Compliance & Financial Advisory for Businesses</h1>
+          <h1 class="home-title">Expert Tax Compliance & Financial Advisory Services</h1>
           
           <div class="cards-container">
             <div class="portal-card" onclick="switchView('logistics')">
               <div class="card-img-wrapper">
-                <img src="Screenshot 2026-09-07 124017.png" alt="Mathrusri Logistics" onerror="this.src='Screenshot 2026-09-07 124017.jpg'">
+                <img src="mathrusri.jpeg" alt="Mathrusri Logistics">
               </div>
               <div class="card-footer">Mathrusri Logistics</div>
             </div>
 
             <div class="portal-card" onclick="switchView('gastro')">
               <div class="card-img-wrapper">
-                <img src="images.jpg" alt="Nalini Gastro Center">
+                <img src="nalinigastro.jpeg" alt="Nalini Gastro Center">
               </div>
               <div class="card-footer">Nalini Gastro Center</div>
             </div>
@@ -567,11 +575,12 @@
           </div>
 
           <div class="footer-bottom">
-            &copy; 2026 SIVA KARANGULA - consultant@income tax. All Rights Reserved.
+            &copy; 2026 SIVA KARANGULA - Consultant@Income Tax. All Rights Reserved.
           </div>
         </footer>
       </div>
 
+      <!-- IFRAMES -->
       <div id="view-logistics" class="view-content">
         <iframe src="https://sivakarangula.github.io/MLPL1/"></iframe>
       </div>
@@ -587,11 +596,9 @@
   </div>
 
   <script>
-    // PREDEFINED CREDENTIALS
     const AUTH_USERNAME = "Sivakarangula";
     const AUTH_PASSWORD = "207456";
 
-    // LOGIN FORM SUBMISSION HANDLER
     document.getElementById('login-form').addEventListener('submit', function(event) {
       event.preventDefault();
       
@@ -599,7 +606,6 @@
       const enteredPassword = document.getElementById('password-field').value.trim();
       const errorMsgBox = document.getElementById('error-message');
 
-      // Check credentials match
       if (enteredUsername === AUTH_USERNAME && enteredPassword === AUTH_PASSWORD) {
         errorMsgBox.style.display = 'none';
         document.getElementById('login-page').style.display = 'none';
@@ -610,7 +616,6 @@
       }
     });
 
-    // SIGN OUT HANDLER
     function handleSignOut() {
       document.getElementById('username-field').value = '';
       document.getElementById('password-field').value = '';
@@ -619,7 +624,6 @@
       document.getElementById('login-page').style.display = 'flex';
     }
 
-    // VIEW SWITCHER
     function switchView(targetView) {
       const views = document.querySelectorAll('.view-content');
       views.forEach(v => v.classList.remove('active'));
