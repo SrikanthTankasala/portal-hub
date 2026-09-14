@@ -675,13 +675,12 @@
         <iframe src="https://sivakarangula.github.io/Nalini-Gastro/"></iframe>
       </div>
 
-      <!-- ABR CINEMAS VIEW WITH PDF-DEFAULT STOCK PARSER & SOFTWARE STOCK -->
+      <!-- ABR CINEMAS VIEW WITH PRECISE STOCK VARIANCE PDF PARSING -->
       <div id="view-cinemas" class="view-content">
         <div class="abr-container">
           <div class="abr-card">
             <h2>ABR Cinemas - Stock File Upload & Integration</h2>
             <div class="abr-form-group">
-              <!-- Default file picker / accept ordered with PDF first -->
               <input type="file" id="abrStockFile" accept=".pdf,.xlsx,.xls,.csv" required>
               <button type="button" class="abr-btn" id="abrProcessBtn">Process & Update Software Stock</button>
             </div>
@@ -758,7 +757,7 @@
       window.scrollTo(0, 0);
     }
 
-    // --- ABR Cinemas Stock Parser & Software Stock Logic ---
+    // --- ABR Cinemas Precise Stock Variance Report Parser ---
     document.getElementById('abrProcessBtn').addEventListener('click', async () => {
       const fileInput = document.getElementById('abrStockFile');
       if (!fileInput.files.length) {
@@ -828,7 +827,7 @@
       });
     }
 
-    // Parse PDF File
+    // Parse PDF File using coordinate-based sorting to properly align Stock Variance Reports
     async function parsePDF(file) {
       const arrayBuffer = await file.arrayBuffer();
       const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
@@ -837,17 +836,81 @@
       for (let i = 1; i <= pdf.numPages; i++) {
         const page = await pdf.getPage(i);
         const textContent = await page.getTextContent();
-        const textItems = textContent.items.map(item => item.str.trim()).filter(str => str.length > 0);
 
-        for (let j = 0; j < textItems.length; j += 3) {
-          if (textItems[j] && textItems[j+1] && textItems[j+2]) {
-            items.push({
-              name: textItems[j],
-              uom: textItems[j+1],
-              closingBalance: textItems[j+2]
-            });
+        // Map items with coordinates (transform[4] is X coordinate, transform[5] is Y coordinate)
+        let textTokens = textContent.items.map(item => ({
+          str: item.str.trim(),
+          x: item.transform[4],
+          y: item.transform[5]
+        })).filter(token => token.str.length > 0);
+
+        // Sort tokens top-to-bottom (descending Y), then left-to-right (ascending X)
+        textTokens.sort((a, b) => {
+          if (Math.abs(a.y - b.y) > 4) {
+            return b.y - a.y; // Different lines
           }
+          return a.x - b.x; // Same line, left to right
+        });
+
+        // Group into lines based on Y proximity
+        let lines = [];
+        let currentLine = [];
+        let currentY = null;
+
+        textTokens.forEach(token => {
+          if (currentY === null || Math.abs(token.y - currentY) > 4) {
+            if (currentLine.length > 0) {
+              lines.push(currentLine);
+            }
+            currentLine = [token];
+            currentY = token.y;
+          } else {
+            currentLine.push(token);
+          }
+        });
+        if (currentLine.length > 0) {
+          lines.push(currentLine);
         }
+
+        // Filter out header, metadata, and footer labels to grab only item stock rows
+        // Typical item rows contain Item Name, UOM, and Closing Balance numbers
+        lines.forEach(line => {
+          const lineTexts = line.map(t => t.str);
+          const joinedLine = lineTexts.join(" ");
+
+          // Skip report headers / metadata lines
+          if (
+            joinedLine.includes("Historical - Stock Variance Report") ||
+            joinedLine.includes("ABR Cinemas Vijayawada") ||
+            joinedLine.includes("Until:") ||
+            joinedLine.includes("Stock Location:") ||
+            joinedLine.includes("Item Class:") ||
+            joinedLine.includes("Frequency:") ||
+            joinedLine.includes("Cost:") ||
+            joinedLine.includes("ITEM NAME") ||
+            joinedLine.includes("UOM") ||
+            joinedLine.includes("CLOSING BALANCE") ||
+            joinedLine.includes("Page ")
+          ) {
+            return;
+          }
+
+          // A valid stock row layout usually has at least 3 distinct elements (Item Name, UOM, Closing Balance)
+          if (lineTexts.length >= 3) {
+            const closingBalance = lineTexts[lineTexts.length - 1];
+            const uom = lineTexts[lineTexts.length - 2];
+            const name = lineTexts.slice(0, lineTexts.length - 2).join(" ");
+
+            // Ensure closing balance resembles a numeric value
+            if (!isNaN(parseFloat(closingBalance))) {
+              items.push({
+                name: name,
+                uom: uom,
+                closingBalance: closingBalance
+              });
+            }
+          }
+        });
       }
       return items;
     }
