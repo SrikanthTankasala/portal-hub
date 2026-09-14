@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SIVA KARANGULA - Consultant@Income Tax</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Libraries for parsing Excel (.xlsx, .xls, .csv) and PDF files -->
+  <!-- Parsers for Excel/CSV and PDF files -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <style>
@@ -310,6 +310,7 @@
       border-color: rgba(56, 189, 248, 0.6);
     }
 
+    /* UPDATED IMAGE WRAPPER & IMAGE STYLES FOR PERFECT FIT */
     .card-img-wrapper {
       position: relative;
       width: 100%;
@@ -665,7 +666,7 @@
         </footer>
       </div>
 
-      <!-- IFRAME VIEWS (LOGISTICS & GASTRO UNTOUCHED) -->
+      <!-- IFRAMES -->
       <div id="view-logistics" class="view-content">
         <iframe src="https://sivakarangula.github.io/MLPL1/"></iframe>
       </div>
@@ -674,13 +675,13 @@
         <iframe src="https://sivakarangula.github.io/Nalini-Gastro/"></iframe>
       </div>
 
-      <!-- ABR CINEMAS VIEW WITH DEFAULT PDF / EXCEL / CSV STOCK PARSER -->
+      <!-- ABR CINEMAS VIEW WITH PDF-DEFAULT STOCK PARSER & SOFTWARE STOCK -->
       <div id="view-cinemas" class="view-content">
         <div class="abr-container">
           <div class="abr-card">
             <h2>ABR Cinemas - Stock File Upload & Integration</h2>
             <div class="abr-form-group">
-              <!-- Default format/accept set to PDF first, supporting excel and csv -->
+              <!-- Default file picker / accept ordered with PDF first -->
               <input type="file" id="abrStockFile" accept=".pdf,.xlsx,.xls,.csv" required>
               <button type="button" class="abr-btn" id="abrProcessBtn">Process & Update Software Stock</button>
             </div>
@@ -781,7 +782,7 @@
         }
 
         if (items.length === 0) {
-          alert('No stock entries found in the uploaded file.');
+          alert('No valid stock items found in the uploaded file.');
           return;
         }
 
@@ -805,7 +806,6 @@
             const rows = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 });
 
             const items = [];
-            // Assuming row format: [Item Name, UOM, Closing Balance] starting from index 1 (skipping header)
             for (let i = 1; i < rows.length; i++) {
               const row = rows[i];
               if (row && row.length >= 3) {
@@ -839,7 +839,6 @@
         const textContent = await page.getTextContent();
         const textItems = textContent.items.map(item => item.str.trim()).filter(str => str.length > 0);
 
-        // Grouping sequential extracted texts into [Item Name, UOM, Closing Balance] triplets
         for (let j = 0; j < textItems.length; j += 3) {
           if (textItems[j] && textItems[j+1] && textItems[j+2]) {
             items.push({
