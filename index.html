@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SIVA KARANGULA - Consultant@Income Tax</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Parsers for Excel and PDF -->
+  <!-- Libraries for parsing Excel (.xlsx, .xls, .csv) and PDF files -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <style>
@@ -349,9 +349,9 @@
       border: none;
     }
 
-    /* ABR CINEMAS CUSTOM STOCK UPLOAD INTERFACE */
+    /* ABR CINEMAS CUSTOM STOCK MANAGEMENT UI */
     .abr-container {
-      padding: 30px 40px;
+      padding: 40px;
       max-width: 1200px;
       margin: 0 auto;
       color: #fff;
@@ -359,30 +359,30 @@
 
     .abr-card {
       background: rgba(15, 23, 42, 0.9);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 12px;
       padding: 25px;
       margin-bottom: 30px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
     }
 
     .abr-card h2 {
       color: #38bdf8;
-      margin-bottom: 15px;
       font-size: 20px;
+      margin-bottom: 15px;
     }
 
-    .abr-upload-form {
+    .abr-form-group {
       display: flex;
       gap: 15px;
       align-items: center;
       flex-wrap: wrap;
     }
 
-    .abr-upload-form input[type="file"] {
+    .abr-form-group input[type="file"] {
       background: #1e293b;
-      color: #cbd5e1;
+      color: #e2e8f0;
       padding: 10px;
       border: 1px solid #475569;
       border-radius: 6px;
@@ -391,7 +391,7 @@
 
     .abr-btn {
       background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-      color: white;
+      color: #ffffff;
       border: none;
       padding: 10px 20px;
       font-weight: 700;
@@ -665,7 +665,7 @@
         </footer>
       </div>
 
-      <!-- IFRAMES -->
+      <!-- IFRAME VIEWS (LOGISTICS & GASTRO UNTOUCHED) -->
       <div id="view-logistics" class="view-content">
         <iframe src="https://sivakarangula.github.io/MLPL1/"></iframe>
       </div>
@@ -674,20 +674,20 @@
         <iframe src="https://sivakarangula.github.io/Nalini-Gastro/"></iframe>
       </div>
 
-      <!-- ABR CINEMAS VIEW WITH STOCK FILE UPLOAD PARSER -->
+      <!-- ABR CINEMAS VIEW WITH DEFAULT PDF / EXCEL / CSV STOCK PARSER -->
       <div id="view-cinemas" class="view-content">
         <div class="abr-container">
           <div class="abr-card">
-            <h2>ABR Cinemas - Software Stock Import</h2>
-            <div class="abr-upload-form">
-              <!-- Default format set to PDF -->
+            <h2>ABR Cinemas - Stock File Upload & Integration</h2>
+            <div class="abr-form-group">
+              <!-- Default format/accept set to PDF first, supporting excel and csv -->
               <input type="file" id="abrStockFile" accept=".pdf,.xlsx,.xls,.csv" required>
-              <button type="button" class="abr-btn" id="abrProcessBtn">Import & Update Stock</button>
+              <button type="button" class="abr-btn" id="abrProcessBtn">Process & Update Software Stock</button>
             </div>
           </div>
 
           <div class="abr-card">
-            <h2>Current Software Stock Inventory</h2>
+            <h2>Software Stock Inventory</h2>
             <table class="abr-table">
               <thead>
                 <tr>
@@ -698,7 +698,7 @@
               </thead>
               <tbody id="abrStockTableBody">
                 <tr>
-                  <td colspan="3" style="text-align: center; color: #94a3b8;">No stock imported yet. Please upload a file.</td>
+                  <td colspan="3" style="text-align: center; color: #94a3b8;">No stock records uploaded yet.</td>
                 </tr>
               </tbody>
             </table>
@@ -761,7 +761,7 @@
     document.getElementById('abrProcessBtn').addEventListener('click', async () => {
       const fileInput = document.getElementById('abrStockFile');
       if (!fileInput.files.length) {
-        alert('Please select a file to upload.');
+        alert('Please select a stock file to upload.');
         return;
       }
 
@@ -781,19 +781,19 @@
         }
 
         if (items.length === 0) {
-          alert('No valid items with Closing Balance found in the uploaded file.');
+          alert('No stock entries found in the uploaded file.');
           return;
         }
 
-        updateAbrSoftwareStockTable(items);
-        alert('Stock successfully imported and updated in Software Stock!');
-      } catch (error) {
-        console.error('Error processing file:', error);
-        alert('Failed to parse the file. Please check the file structure.');
+        updateSoftwareStockTable(items);
+        alert('Software stock successfully updated with extracted closing balances!');
+      } catch (err) {
+        console.error('Parsing error:', err);
+        alert('Error parsing the file. Please check its layout and columns.');
       }
     });
 
-    // Helper: Parse Excel or CSV
+    // Parse Excel or CSV
     function parseExcelOrCSV(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -801,10 +801,11 @@
           try {
             const data = new Uint8Array(e.target.result);
             const workbook = XLSX.read(data, { type: 'array' });
-            const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-            const rows = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+            const sheetName = workbook.SheetNames[0];
+            const rows = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 });
 
             const items = [];
+            // Assuming row format: [Item Name, UOM, Closing Balance] starting from index 1 (skipping header)
             for (let i = 1; i < rows.length; i++) {
               const row = rows[i];
               if (row && row.length >= 3) {
@@ -818,16 +819,16 @@
               }
             }
             resolve(items);
-          } catch (err) {
-            reject(err);
+          } catch (error) {
+            reject(error);
           }
         };
-        reader.onerror = (err) => reject(err);
+        reader.onerror = (error) => reject(error);
         reader.readAsArrayBuffer(file);
       });
     }
 
-    // Helper: Parse PDF File
+    // Parse PDF File
     async function parsePDF(file) {
       const arrayBuffer = await file.arrayBuffer();
       const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
@@ -838,7 +839,7 @@
         const textContent = await page.getTextContent();
         const textItems = textContent.items.map(item => item.str.trim()).filter(str => str.length > 0);
 
-        // Grouping sequential text elements into rows (Item Name, UOM, Closing Balance)
+        // Grouping sequential extracted texts into [Item Name, UOM, Closing Balance] triplets
         for (let j = 0; j < textItems.length; j += 3) {
           if (textItems[j] && textItems[j+1] && textItems[j+2]) {
             items.push({
@@ -852,8 +853,8 @@
       return items;
     }
 
-    // Update ABR Software Stock Table UI
-    function updateAbrSoftwareStockTable(items) {
+    // Update ABR Cinemas Software Stock Table
+    function updateSoftwareStockTable(items) {
       const tbody = document.getElementById('abrStockTableBody');
       tbody.innerHTML = '';
 
